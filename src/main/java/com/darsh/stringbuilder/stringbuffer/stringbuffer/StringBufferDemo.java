@@ -1,14 +1,15 @@
-package com.darsh.stringbuilder.stringbuffer.stringbuilder;
+package com.darsh.stringbuilder.stringbuffer.stringbuffer;
 
-public class StringBuilderDemo {
+public class StringBufferDemo {
     public static void main(String[] args) throws InterruptedException {
-        StringBuilder stringBuilder = new StringBuilder("");
+        StringBuffer sb = new StringBuffer("");
+        //All methods of String-buffer are synchronised, that means consistent output
 
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 for (int i = 0; i < 1000; i++) {
-                    stringBuilder.append("A");
+                    sb.append("A");
                 }
             }
         });
@@ -16,7 +17,7 @@ public class StringBuilderDemo {
             @Override
             public void run() {
                 for (int i = 0; i < 1000; i++) {
-                    stringBuilder.append("B");
+                    sb.append("B");
                 }
             }
         });
@@ -24,7 +25,7 @@ public class StringBuilderDemo {
             @Override
             public void run() {
                 for (int i = 0; i < 1000; i++) {
-                    stringBuilder.append("C");
+                    sb.append("C");
                 }
             }
         });
@@ -37,10 +38,7 @@ public class StringBuilderDemo {
         t2.join();
         t3.join();
 
-        System.out.println("String builder is non synchronized, " +
-                "that means never ❌ use it in multithreaded env without proper synchronization");
-        System.out.println(stringBuilder);
-
-        //Output without proper synchronisation : BCCCBCBBCBBBCCBBCBBCCCCCBBBBBBBBBBCBBBBBBCCCBBCCBBCCBCCCCCCCCCCC
+        System.out.println(sb);
+        //Output will be in order first 1000 A followed by B followed by C
     }
 }
